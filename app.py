@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, render_template
 import os
-from automatic_df_news_fetching import scrape_keyword, setup_driver, KEYWORDS_WITH_PAGES
+from scraper import scrape_keyword, setup_driver, KEYWORDS_WITH_PAGES
 from datetime import datetime, timedelta
 import logging
 
