@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>News Scraper</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        button { padding: 10px 20px; font-size: 16px; }
+        #results { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Devendra Fadnavis News Scraper</h1>
+    <p>Click the button to scrape recent news articles.</p>
+    <button onclick="fetchNews()">Scrape News</button>
+    <div id="results"></div>
+
+    <script>
+        async function fetchNews() {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = 'Scraping...';
+            try {
+                const response = await fetch('/scrape');
+                const data = await response.json();
+                if (data.error) {
+                    resultsDiv.innerHTML = `Error: ${data.error}`;
+                } else {
+                    resultsDiv.innerHTML = '<h2>Results:</h2>';
+                    data.forEach(item => {
+                        resultsDiv.innerHTML += `<p><strong>${item.Title}</strong><br>
+                            <a href="${item.Links}" target="_blank">${item.Links}</a> (Page ${item.Page}, Keyword: ${item.Keyword})</p>`;
+                    });
+                }
+            } catch (error) {
+                resultsDiv.innerHTML = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
